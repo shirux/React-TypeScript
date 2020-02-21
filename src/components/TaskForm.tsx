@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { ITask } from './Task'; 
 
-class TaskForm extends React.Component<ITaskFormProps, ITaskFormState> {
+class TaskForm extends React.Component<ITaskFormProps, any> {
 
     constructor(props: ITaskFormProps) {
         super(props);
@@ -15,17 +15,29 @@ class TaskForm extends React.Component<ITaskFormProps, ITaskFormState> {
     handleNewTask(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const newTask: ITask = {
-            id: 1,
-            title: '',
-            description: '',
+            id: this.getCurrentTimestamp(),
+            title: this.state.title,
+            description: this.state.description,
             completed: false
         };
-        //this.props.addNewTask();
+        this.props.addNewTask(newTask);
+        this.setState({
+            title: '',
+            description: ''
+        });
+        
+    }
 
+    getCurrentTimestamp(): number {
+        return new Date().getTime();
     }
 
     handleInputChange (e: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) {
-        console.log(e.target);
+        const { name, value } = e.target;
+        this.setState({
+            [name]: value
+        });
+        
     }
 
     render() {
@@ -35,17 +47,21 @@ class TaskForm extends React.Component<ITaskFormProps, ITaskFormState> {
                     <div className="form-group">
                         <input 
                             type="text"
+                            name="title"
                             onChange={e => this.handleInputChange(e)}
                             className="form-control" 
                             placeholder="Task Title"
+                            value={this.state.title}
                         />
                     </div>
                     <div className="form-group">
                         <textarea 
                             className="form-control"
+                            name="description"
                             onChange={e => this.handleInputChange(e)}
-                            placeholder="Task Description">
-                        </textarea>
+                            placeholder="Task Description"
+                            value={this.state.description}
+                        ></textarea>
                     </div>
                     
                     <button type="submit" className="btn btn-primary btn-block">

@@ -3,3 +3,21 @@ $color: #fff;
 body {
     background: $color;
 }
+
+#app div {
+    margin: 200px auto;
+
+}
+
+h1, h2{
+    padding: 20px;
+}
+
+h1{
+    text-transform: uppercase;
+}
+
+p, li{
+    padding: 0px 20px;
+}
+

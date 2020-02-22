@@ -38,7 +38,7 @@ export class App extends React.Component<IProps, IState> {
                     <Switch>
                         <Route path="/" exact component={Home}/>
                         <Route path="/focusable-input" component={FocusInput}/>
-                        <Route path="/voting-list/:any" component={VotingList}/>
+                        <Route path="/voting-list/:candidates" component={VotingList}/>
                         <Route path="/register-form" component={Form}/>
                     </Switch>
                 </Router>

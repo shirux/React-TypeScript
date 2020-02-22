@@ -1,9 +1,11 @@
 import * as React from 'react';
 
 import { ITask } from './Task';
+import Home from './Home';
+import FocusInput from './FocusInput';
+import VotingList from './VotingList';
+import Form from './Form';
 
-import TaskForm from './TaskForm';
-import TaskList from './TaskList';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 export class App extends React.Component<IProps, IState> {
@@ -32,26 +34,14 @@ export class App extends React.Component<IProps, IState> {
 
     render() {
         return (
-            <div>
-                <nav className="navbar navbar-light bg-light">
-                    <a className="navbar-brand" href="/">{this.props.title}</a>
-                </nav> 
-                <div className="container p-4">
-                    <div className="row">
-                        <div className="col-md-4">
-                            <TaskForm addNewTask={this.addNewTask.bind(this)}/>
-                        </div>
-                        <div className="col-md-8">
-                            <div className="row">
-                                <TaskList 
-                                    tasks={this.state.tasks}
-                                    deleteTask={this.deleteTask.bind(this)}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <Router>
+                    <Switch>
+                        <Route path="/" exact component={Home}/>
+                        <Route path="/focusable-input" component={FocusInput}/>
+                        <Route path="/voting-list/:any" component={VotingList}/>
+                        <Route path="/register-form" component={Form}/>
+                    </Switch>
+                </Router>
         )
     }
 }

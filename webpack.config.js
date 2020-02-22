@@ -6,7 +6,8 @@ module.exports = {
     entry: './src/index.tsx',
     output: {
         path: path.resolve(__dirname, 'build'),
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        publicPath: '/'
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
@@ -32,6 +33,9 @@ module.exports = {
                 loader: 'source-map-loader'
             }
         ]
+    },
+    devServer: {
+        historyApiFallback: true,
     },
     plugins: [
         new htmlWebpackPlugin({

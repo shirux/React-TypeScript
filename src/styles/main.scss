@@ -5,3 +5,13 @@
 .focus {
     font-weight: bold;
 }
+
+.btn-options {
+    padding: 10px;
+    display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: center;
+}

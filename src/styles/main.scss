@@ -1,23 +1,7 @@
-$color: #fff;
-
-body {
-    background: $color;
+.list-items {
+    list-style-type: none;
 }
 
-#app div {
-    margin: 200px auto;
-
+.focus {
+    font-weight: bold;
 }
-
-h1, h2{
-    padding: 20px;
-}
-
-h1{
-    text-transform: uppercase;
-}
-
-p, li{
-    padding: 0px 20px;
-}
-

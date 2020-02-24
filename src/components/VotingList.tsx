@@ -1,5 +1,8 @@
 import * as React from 'react';
 
+import Candidate from './Candidate';
+import randomFunctions from '../util/functions';
+
 class VotingList extends React.Component<any, IVotingListState> {
 
     constructor(props: any){
@@ -9,59 +12,71 @@ class VotingList extends React.Component<any, IVotingListState> {
         };
     }
 
+    componentDidMount() {
+        let candidates = this.state.candidates;
+        candidates.sort((a,b) => {
+            if(a.votes > b.votes) {
+                return -1
+            } else if(a.votes === b.votes) {
+                if (a.age > b.age) {
+                    return -1;
+                }
+            }
+        })
+            
+      }
+
     generateCandidates(): ICandidate[] {
         let candidates: ICandidate[] = []
         let amountCandidates = parseInt(this.props.match.params.candidates);
         for(let i = 0; i < amountCandidates; i++) {
-            let newCandidate = this.generateRandomCandidate();
+            let newCandidate = this.generateRandomCandidate(i);
             candidates = [...candidates, newCandidate];
         }
         return candidates;
     }
     
-    generateRandomCandidate() {
+    generateRandomCandidate(id: number) {
         let candidate: ICandidate = {
-            firstName: this.generateRandomString(1),
-            lastName: this.generateRandomString(1),
-            age: this.generateRandomNumber(18,100),
-            slogan: this.generateRandomString(10),
-            votes: this.generateRandomNumber(0,10)
+            id: id,
+            firstName: randomFunctions.generateString(1),
+            lastName: randomFunctions.generateString(1),
+            age: randomFunctions.generateNumber(18,100),
+            slogan: randomFunctions.generateString(10),
+            votes: randomFunctions.generateNumber(0,10)
         }
         return candidate;
     }
 
-    generateRandomString(words: number): string{
-        let characters = 'abcdefghijklmnopqrstuvwxyz';
-        let result: string = '';
-        let amountOfLetters: number = this.generateRandomNumber(2,10);
-        for (let i = 0; i < amountOfLetters; i++) {
-            let randomLetter: number = this.generateRandomNumber(0, characters.length-1);
-            result += characters[randomLetter]; 
-        }
-        words--;
-        if (words > 0) {
-            result += ' ' + this.generateRandomString(words);
-        }
-        return result;
-    }
-
-    /**
-     * Return a random number between min and max (both included)
-     * @param min min value accepted in the range
-     * @param max max value accepted in the range
-     */
-    generateRandomNumber(min: number, max: number): number{
-        return Math.floor(Math.random() * (max - min + 1)) + min
-    }
 
     render() {
         return(
-            <div className="candidate-list">
-                <h1>VotingList TODO</h1>
-                <ul>
-                    <h2>{this.props.match.params.candidates}</h2>
-                </ul>
-                
+            <div className='candidate-list'>
+                <section className='jumbotron text-center'>
+                    <div className='container'>
+                        <h1>Welcome to the candidate list</h1>
+                        <p className='lead text-muted'>In this list you can find in detail all the candidate in each card. It is ordered by the amount of votes they have</p>
+                    </div>
+                </section>
+                <div className="container">
+                    <ul>
+                    {
+                        this.state.candidates.map(candidate => {
+                            return (
+                                    <Candidate
+                                        firstName={candidate.firstName}
+                                        lastName={candidate.lastName}
+                                        age={candidate.age}
+                                        slogan={candidate.slogan}
+                                        votes={candidate.votes}
+                                        key={candidate.id}
+                                />    
+                            );
+                                    
+                        })
+                    }
+                    </ul>
+                </div>
             </div>
             
         );
@@ -73,6 +88,7 @@ interface IVotingListState {
 }
 
 interface ICandidate {
+    id: number,
     firstName: string,
     lastName: string,
     age: number,

@@ -5,6 +5,7 @@ import Home from './Home';
 import FocusInput from './FocusInput';
 import VotingList from './VotingList';
 import Form from './Form';
+import Navbar from './Navbar';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -34,7 +35,9 @@ export class App extends React.Component<IProps, IState> {
 
     render() {
         return (
-                <Router>
+            <div>
+                 <Router>
+                 <Navbar />
                     <Switch>
                         <Route path="/" exact component={Home}/>
                         <Route path="/focusable-input" component={FocusInput}/>
@@ -42,6 +45,8 @@ export class App extends React.Component<IProps, IState> {
                         <Route path="/register-form" component={Form}/>
                     </Switch>
                 </Router>
+            </div>
+           
         )
     }
 }
